@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>McLenosh</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --blue: #1a5fb4; --blue-light: #e8f0fc; --blue-mid: #4a90d9; --black: #0f0f0f; --white: #fafaf8; --muted: #8a8a85; --border: rgba(26, 95, 180, 0.12); }
+  body { font-family: 'DM Mono', monospace; background: var(--white); color: var(--black); min-height: 100vh; overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 3rem; background: rgba(250,250,248,0.92); backdrop-filter: blur(8px); border-bottom: 0.5px solid var(--border); }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 300; letter-spacing: 0.12em; color: var(--black); text-decoration: none; }
+  .logo span { color: var(--blue); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav ul a { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  nav ul a:hover { color: var(--blue); }
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 8rem 3rem 4rem; gap: 4rem; }
+  .hero-text h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 7vw, 6rem); font-weight: 300; line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.5rem; }
+  .hero-text h1 em { font-style: italic; color: var(--blue); }
+  .hero-text p { font-size: 0.78rem; line-height: 1.9; color: var(--muted); max-width: 34ch; margin-bottom: 2.5rem; letter-spacing: 0.02em; }
+  .btn-primary { display: inline-block; padding: 0.75rem 2rem; background: var(--blue); color: white; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.15s; cursor: pointer; border: none; }
+  .btn-primary:hover { background: #1248a0; transform: translateY(-1px); }
+  .hero-visual { position: relative; height: 520px; display: flex; align-items: center; justify-content: center; }
+  .visual-frame { width: 340px; height: 440px; border: 0.5px solid var(--blue); position: relative; overflow: hidden; }
+  .visual-inner { width: 100%; height: 100%; background: var(--blue-light); display: flex; align-items: center; justify-content: center; }
+  .visual-cross { width: 1px; height: 60px; background: var(--blue-mid); position: relative; }
+  .visual-cross::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 1px; background: var(--blue-mid); }
+  .visual-tag { position: absolute; top: 1rem; left: 1rem; font-size: 0.62rem; letter-spacing: 0.1em; color: var(--blue); text-transform: uppercase; }
+  .visual-num { position: absolute; bottom: 1rem; right: 1rem; font-size: 2.5rem; font-family: 'Cormorant Garamond', serif; font-weight: 300; color: rgba(26, 95, 180, 0.25); line-height: 1; }
+  .float-dot { position: absolute; width: 8px; height: 8px; background: var(--blue); border-radius: 50%; top: 3rem; right: 4rem; animation: pulse 3s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  .about { padding: 7rem 3rem; display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; border-top: 0.5px solid var(--border); }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); padding-top: 0.3rem; }
+  .about-body h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 1.5rem; }
+  .about-body p { font-size: 0.78rem; line-height: 1.9; color: var(--muted); max-width: 58ch; letter-spacing: 0.02em; }
+  .about-body p + p { margin-top: 1rem; }
+  .about-body .invite { color: var(--black); font-style: italic; }
+  .colophon { padding: 7rem 3rem; border-top: 0.5px solid var(--border); display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; }
+  .colophon-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 300; font-style: italic; line-height: 1.6; color: var(--black); max-width: 50ch; }
+  .colophon-text .names { font-style: normal; color: var(--blue); font-size: 0.9em; letter-spacing: 0.04em; display: block; margin-bottom: 0.6rem; }
+  .secret { padding: 7rem 3rem; border-top: 0.5px solid var(--border); display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; }
+  .secret-body { display: flex; flex-direction: column; gap: 1.5rem; }
+  .secret-question { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--black); }
+  .secret-input-row { display: flex; gap: 0; align-items: stretch; max-width: 320px; }
+  .secret-input { font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.7rem 1rem; border: 0.5px solid rgba(26,95,180,0.35); background: var(--white); color: var(--black); outline: none; width: 100%; letter-spacing: 0.08em; transition: border-color 0.2s; }
+  .secret-input:focus { border-color: var(--blue); }
+  .secret-btn { padding: 0.7rem 1.2rem; background: var(--blue); color: white; font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; border: none; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+  .secret-btn:hover { background: #1248a0; }
+  .secret-feedback { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; min-height: 1.2rem; transition: opacity 0.3s; }
+  .secret-feedback.correct { color: var(--blue); font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; text-transform: none; letter-spacing: 0.04em; }
+  .secret-feedback.wrong { color: var(--muted); }
+  footer { padding: 2.5rem 3rem; border-top: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; gap: 2rem; }
+  .footer-left { display: flex; flex-direction: column; gap: 0.3rem; }
+  .footer-date { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+  .footer-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; font-style: italic; color: var(--blue); letter-spacing: 0.04em; }
+  .footer-dot { width: 6px; height: 6px; background: var(--blue); border-radius: 50%; flex-shrink: 0; }
+  .footer-right { font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted); }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  @media (max-width: 768px) {
+    nav { padding: 1.2rem 1.5rem; } nav ul { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+    .hero-visual { display: none; }
+    .about, .colophon, .secret { grid-template-columns: 1fr; gap: 2rem; padding: 4rem 1.5rem; }
+    footer { padding: 1.5rem; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">Mc<span>Lenosh</span></a>
+  <ul>
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#colophon">Colophon</a></li>
+    <li><a href="#secret">Secret</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-text reveal">
+    <h1>Projet<br><em>créatif</em><br>McLenosh</h1>
+    <p>Un espace de création, de recherche et d'expression. Chaque détail compte, chaque forme a sa raison d'être.</p>
+    <a href="#about" class="btn-primary">Découvrir</a>
+  </div>
+  <div class="hero-visual reveal">
+    <div class="float-dot"></div>
+    <div class="visual-frame">
+      <div class="visual-inner">
+        <div class="visual-cross"></div>
+        <span class="visual-tag">McLenosh</span>
+        <span class="visual-num">01</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="section-label reveal">À propos</div>
+  <div class="about-body reveal">
+    <h2>Une vision,<br>une signature</h2>
+    <p>Une vie de Walt est un projet créatif né d'une exigence esthétique particulière de McLenosh. Ici, la forme rencontre le sens dans chaque composition, chaque choix typographique, chaque geste visuel. Ce site est le reflet d'une démarche singulière, entre rigueur et sensibilité.</p>
+    <p class="invite">Parcours ce site, regarde tous les détails.</p>
+  </div>
+</section>
+
+<section class="colophon" id="colophon">
+  <div class="section-label reveal">Colophon</div>
+  <div class="colophon-text reveal">
+    <span class="names">Merci à Chuche, Simon, Van, Val, Bob, Seng, Marty, Romain, Paul, Claude.</span>
+    Merci pour l'amour, merci pour l'amitié et pour tout ce qu'il y a au milieu.
+  </div>
+</section>
+
+<section class="secret" id="secret">
+  <div class="section-label reveal">Secret</div>
+  <div class="secret-body reveal">
+    <div class="secret-question">Quel est le nombre secret ?</div>
+    <div class="secret-input-row">
+      <input class="secret-input" id="secretInput" type="text" placeholder="Votre réponse..." autocomplete="off" />
+      <button class="secret-btn" id="secretBtn">Valider</button>
+    </div>
+    <div class="secret-feedback" id="secretFeedback"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">
+    <span class="footer-date">22 juin 2008</span>
+    <span class="footer-title">Une Vie de Walt</span>
+  </div>
+  <div class="footer-dot"></div>
+  <span class="footer-right">© 2025 McLenosh</span>
+</footer>
+
+<script>
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 80); });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth' }); });
+});
+function checkSecret() {
+  const val = document.getElementById('secretInput').value.trim();
+  const fb = document.getElementById('secretFeedback');
+  if (val === '17') {
+    fb.textContent = 'Carton 17';
+    fb.className = 'secret-feedback correct';
+  } else {
+    fb.textContent = 'Faux';
+    fb.className = 'secret-feedback wrong';
+  }
+}
+document.getElementById('secretBtn').addEventListener('click', checkSecret);
+document.getElementById('secretInput').addEventListener('keydown', e => { if (e.key === 'Enter') checkSecret(); });
+</script>
+</body>
+</html>
