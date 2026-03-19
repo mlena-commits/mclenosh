@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>McLenosh</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script>
+MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] }, chtml: { displayAlign: 'left', displayIndent: '0' } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root { --blue: #1a5fb4; --blue-light: #e8f0fc; --blue-mid: #4a90d9; --black: #0f0f0f; --white: #fafaf8; --muted: #8a8a85; --border: rgba(26, 95, 180, 0.12); }
@@ -42,6 +46,11 @@
   .secret { padding: 7rem 3rem; border-top: 0.5px solid var(--border); display: grid; grid-template-columns: 1fr 2fr; gap: 6rem; align-items: start; }
   .secret-body { display: flex; flex-direction: column; gap: 1.5rem; }
   .secret-question { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 300; font-style: italic; line-height: 1.4; color: var(--black); }
+  .enigme { margin-bottom: 1.5rem; }
+  .enigme-title { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 1rem; }
+  .enigme-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 300; line-height: 1.8; color: var(--black); }
+  .enigme-text .math-block { margin: 1.2rem 0; font-size: 1.1em; text-align: left; }
+  .enigme-text .math-block .MathJax { text-align: left !important; }
   .secret-input-row { display: flex; gap: 0; align-items: stretch; max-width: 320px; }
   .secret-input { font-family: 'DM Mono', monospace; font-size: 0.85rem; padding: 0.7rem 1rem; border: 0.5px solid rgba(26,95,180,0.35); background: var(--white); color: var(--black); outline: none; width: 100%; letter-spacing: 0.08em; transition: border-color 0.2s; }
   .secret-input:focus { border-color: var(--blue); }
@@ -116,6 +125,15 @@
 <section class="secret" id="secret">
   <div class="section-label reveal">Secret</div>
   <div class="secret-body reveal">
+    <div class="enigme">
+      <div class="enigme-title">Énigme MPSI — Somme télescopique</div>
+      <div class="enigme-text">
+        <p>Calculer</p>
+        <div class="math-block">\[ S = \sum_{k=1}^{16} \frac{1}{k(k+1)} \]</div>
+        <p>En déduire la valeur de</p>
+        <div class="math-block">\[ \frac{1}{1 - S} \]</div>
+      </div>
+    </div>
     <div class="secret-question">Quel est le nombre secret ?</div>
     <div class="secret-input-row">
       <input class="secret-input" id="secretInput" type="text" placeholder="Votre réponse..." autocomplete="off" />
